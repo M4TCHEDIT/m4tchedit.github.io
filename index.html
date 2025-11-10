@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -22,21 +21,12 @@
   </nav>
 </header>
 
-<!-- Hero Carrusel Corregido -->
+<!-- Hero Simple y Visible -->
 <div class="hero">
-  <div class="hero-slides" id="hero-slides">
-    <div class="hero-slide" style="background: linear-gradient(rgba(255,102,0,0.8), rgba(255,102,0,0.9)), url('https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-      <div class="hero-content">
-        <h1>🔥 2x1 en Cervezas Hoy</h1>
-        <p>¡Aprovecha antes de que se acabe!</p>
-      </div>
-    </div>
-    <div class="hero-slide" style="background: linear-gradient(rgba(0,51,102,0.8), rgba(0,51,102,0.9)), url('https://images.unsplash.com/photo-1575240092532-7d4f9e4f1d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
-      <div class="hero-content">
-        <h1>🚚 Envío Gratis en Pedidos >$500</h1>
-        <p>Para mayoristas y minoristas</p>
-      </div>
-    </div>
+  <div class="hero-content">
+    <h1>🔥 2x1 en Cervezas Hoy</h1>
+    <p>¡Aprovecha antes de que se acabe!</p>
+    <button class="btn-primary" onclick="document.querySelector('.bestsellers').scrollIntoView({behavior:'smooth'})">Ver Productos</button>
   </div>
 </div>
 
@@ -78,11 +68,10 @@
     <button onclick="closeAdmin()" class="btn-close">✕</button>
   </div>
   <div class="admin-content">
-    <p>¡Bienvenido! Aquí puedes gestionar productos, promociones y pedidos.</p>
-    <p>🔒 Contraseña utilizada: <code>admin123</code></p>
-    <h3>Productos</h3>
+    <p>¡Bienvenido! Aquí puedes gestionar productos y promociones.</p>
+    <p>🔒 Contraseña: <code>admin123</code></p>
+    <h3>Productos Actuales</h3>
     <div id="admin-products"></div>
-    <button onclick="alert('En versión real: formulario para agregar productos.')">+ Agregar Producto</button>
   </div>
 </div>
 
