@@ -8,7 +8,7 @@ function getProducts() {
       id: 1,
       name: 'Cerveza Artesanal',
       desc: 'Cerveza premium de 500ml',
-      img: 'https://plus.unsplash.com/premium_photo-1664391981475-42c0449b7727?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=483',
+      img: 'https://www.quetomo.cl/wp-content/uploads/2017/08/turinger_weiss.jpg',
       price: { minorista: 50, mayorista: 40 },
       stock: 100
     },
@@ -16,7 +16,7 @@ function getProducts() {
       id: 2,
       name: 'Vino Tinto',
       desc: 'Vino tinto reserva 750ml',
-      img: 'https://images.unsplash.com/photo-1582673937754-8d0cfed5dcc9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=475',
+      img: 'https://casadevinosmendoza.com.ar/wp-content/uploads/2024/10/Vino-Privado-Reserva-750ml.jpg',
       price: { minorista: 150, mayorista: 120 },
       stock: 50
     },
@@ -24,7 +24,7 @@ function getProducts() {
       id: 3,
       name: 'Agua Mineral',
       desc: 'Agua natural sin gas 1.5L',
-      img: 'https://images.unsplash.com/photo-1652491285696-472cec79a77a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=387',
+      img: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.goal.com%2Fes-ar%2Fnoticias%2Fbuffon-a-donarumma-con-la-juventus-nunca-te-equivocas%2F1n9wpgbyvxc0s1ae5lv59m75a9&psig=AOvVaw2rYP4NbbU2vM61C6YnvqNG&ust=1762826198151000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLiK_vK95pADFQAAAAAdAAAAABAE',
       price: { minorista: 20, mayorista: 15 },
       stock: 200
     }
@@ -298,4 +298,5 @@ function closeAdmin() {
 function toggleMobileMenu() {
   document.getElementById('nav-links').classList.toggle('active');
 }
+
 
