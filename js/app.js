@@ -19,6 +19,7 @@ let carouselInterval;
 
 function showSlide(index) {
     if (heroSlides) {
+        // La lógica de desplazamiento se mantiene
         heroSlides.style.transform = `translateX(-${index * 100}%)`;
     }
 }
@@ -32,10 +33,8 @@ function startCarousel() {
     if (carouselInterval) {
         clearInterval(carouselInterval);
     }
-    // Muestra el primer slide al iniciar, sin esperar
-    if (totalSlides > 0) { // Solo si hay slides
-      showSlide(currentSlide); 
-    }
+    // CORRECCIÓN 1: Eliminamos la llamada a showSlide(currentSlide) aquí.
+    // Solo iniciamos el temporizador. La posición inicial ya se fija en DOMContentLoaded.
     carouselInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
 }
 // --- Fin Carrusel ---
@@ -270,5 +269,10 @@ function deleteProduct(id) {
 document.addEventListener('DOMContentLoaded', () => {
     renderBestsellers();
     renderCart(); // Asegúrate de que el carrito también se inicialice
-    startCarousel(); // <--- ¡Esta línea es CRÍTICA para el carrusel!
+    
+    // CORRECCIÓN 2: 
+    // Fija la posición inicial en 0 (slide naranja)
+    showSlide(0); 
+    // Inicia el carrusel. El primer movimiento ocurrirá solo después de 5 segundos.
+    startCarousel(); 
 });
