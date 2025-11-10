@@ -1,302 +1,274 @@
-// Gestión de productos con localStorage
-function getProducts() {
-  const saved = localStorage.getItem('bebidas_products');
-  if (saved) return JSON.parse(saved);
-  
-  const defaults = [
-    {
-      id: 1,
-      name: 'Cerveza Artesanal',
-      desc: 'Cerveza premium de 500ml',
-      img: 'https://www.quetomo.cl/wp-content/uploads/2017/08/turinger_weiss.jpg',
-      price: { minorista: 50, mayorista: 40 },
-      stock: 100
-    },
-    {
-      id: 2,
-      name: 'Vino Tinto',
-      desc: 'Vino tinto reserva 750ml',
-      img: 'https://casadevinosmendoza.com.ar/wp-content/uploads/2024/10/Vino-Privado-Reserva-750ml.jpg',
-      price: { minorista: 150, mayorista: 120 },
-      stock: 50
-    },
-    {
-      id: 3,
-      name: 'Agua Mineral',
-      desc: 'Agua natural sin gas 1.5L',
-      img: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.goal.com%2Fes-ar%2Fnoticias%2Fbuffon-a-donarumma-con-la-juventus-nunca-te-equivocas%2F1n9wpgbyvxc0s1ae5lv59m75a9&psig=AOvVaw2rYP4NbbU2vM61C6YnvqNG&ust=1762826198151000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLiK_vK95pADFQAAAAAdAAAAABAE',
-      price: { minorista: 20, mayorista: 15 },
-      stock: 200
-    }
-  ];
-  localStorage.setItem('bebidas_products', JSON.stringify(defaults));
-  return defaults;
-}
+let products = [
+    { id: 1, name: 'Cerveza Lager', desc: 'Refrescante cerveza clara', img: 'https://images.unsplash.com/photo-1601007870719-f55a108a73a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 150, wholesalePrice: 120, stock: 50 },
+    { id: 2, name: 'Vino Tinto', desc: 'Vino tinto reserva 750ml', img: 'https://images.unsplash.com/photo-1597405260515-5853b05a761e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 800, wholesalePrice: 650, stock: 30 },
+    { id: 3, name: 'Agua Mineral', desc: 'Agua natural sin gas 1.5L', img: 'https://images.unsplash.com/photo-1605372433065-27a37171d18f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 50, wholesalePrice: 40, stock: 100 },
+    { id: 4, name: 'Jugo Natural Naranja', desc: 'Jugo de naranja exprimido 1L', img: 'https://images.unsplash.com/photo-1600271732559-67d710ce1c8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 180, wholesalePrice: 150, stock: 40 },
+    { id: 5, name: 'Gaseosa Cola', desc: 'Gaseosa sabor cola 2.25L', img: 'https://images.unsplash.com/photo-1579782509177-d46e25774a3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 120, wholesalePrice: 100, stock: 60 },
+    { id: 6, name: 'Cerveza Artesanal IPA', desc: 'IPA con notas cítricas 500ml', img: 'https://images.unsplash.com/photo-1596707328630-f8f946e38234?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80', retailPrice: 250, wholesalePrice: 200, stock: 25 },
+];
 
-function saveProducts(products) {
-  localStorage.setItem('bebidas_products', JSON.stringify(products));
-}
+let cart = [];
+let clientType = 'retail'; // 'retail' o 'wholesale'
 
-let clientType = 'minorista';
-
-// Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-  updateClientTypeUI();
-  renderBestsellers();
-  loadCartFromStorage();
-  initHeroCarousel();
-});
-
-// Carrusel
+// --- Carrusel Variables y Funciones (Corregido) ---
+const heroSlides = document.getElementById('hero-slides');
 let currentSlide = 0;
-function initHeroCarousel() {
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % 2;
-    document.getElementById('hero-slides').style.transform = `translateX(-${currentSlide * 100}%)`;
-  }, 5000);
+// Asegura que totalSlides se calcule solo si heroSlides existe
+const totalSlides = heroSlides ? heroSlides.children.length : 0; 
+let carouselInterval;
+
+function showSlide(index) {
+    if (heroSlides) {
+        heroSlides.style.transform = `translateX(-${index * 100}%)`;
+    }
 }
 
-// Render productos
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function startCarousel() {
+    if (carouselInterval) {
+        clearInterval(carouselInterval);
+    }
+    // Muestra el primer slide al iniciar, sin esperar
+    if (totalSlides > 0) { // Solo si hay slides
+      showSlide(currentSlide); 
+    }
+    carouselInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
+}
+// --- Fin Carrusel ---
+
+// --- Funciones de Renderizado ---
 function renderBestsellers() {
-  const container = document.getElementById('bestsellers-container');
-  const products = getProducts();
-  container.innerHTML = '';
-  products.forEach(p => {
-    const price = p.price[clientType];
-    const unit = clientType === 'mayorista' ? ' por caja' : ' por unidad';
-    const div = document.createElement('div');
-    div.className = 'product-card';
-    div.innerHTML = `
-      <img src="${p.img}" alt="${p.name}" loading="lazy">
-      <h3>${p.name}</h3>
-      <p>${p.desc}</p>
-      <div class="price">$${price}${unit}</div>
-      <p>Stock: ${p.stock}</p>
-      <button onclick="addToCart(${p.id})" ${p.stock <= 0 ? 'disabled' : ''}>
-        ${p.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock'}
-      </button>
-    `;
-    container.appendChild(div);
-  });
+    const container = document.getElementById('bestsellers-container');
+    if (!container) return; // Salir si el contenedor no existe
+
+    container.innerHTML = '';
+    products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product-card';
+        div.innerHTML = `
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <h3>${p.name}</h3>
+            <p>${p.desc}</p>
+            <p class="price">$${clientType === 'retail' ? p.retailPrice.toFixed(2) : p.wholesalePrice.toFixed(2)}</p>
+            <p>Stock: ${p.stock}</p>
+            <button onclick="addToCart(${p.id})">Agregar al Carrito</button>
+        `;
+        container.appendChild(div);
+    });
 }
 
-// Agregar producto
-function addProduct() {
-  const name = document.getElementById('new-product-name').value.trim();
-  const desc = document.getElementById('new-product-desc').value.trim();
-  const retail = parseFloat(document.getElementById('new-product-retail').value);
-  const wholesale = parseFloat(document.getElementById('new-product-wholesale').value);
-  const stock = parseInt(document.getElementById('new-product-stock').value);
-  
-  if (!name || !desc || isNaN(retail) || isNaN(wholesale) || isNaN(stock) || stock < 0) {
-    alert('⚠️ Por favor, completa todos los campos correctamente.');
-    return;
-  }
+function renderCart() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalSpan = document.getElementById('cart-total');
+    const cartCountSpan = document.getElementById('cart-count');
 
-  const products = getProducts();
-  const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-  
-  products.push({
-    id: newId,
-    name,
-    desc,
-    img: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
-    price: { minorista: retail, mayorista: wholesale },
-    stock
-  });
-  
-  saveProducts(products);
-  alert(`✅ ¡Producto "${name}" agregado con éxito!`);
-  
-  // Limpiar formulario
-  document.getElementById('new-product-name').value = '';
-  document.getElementById('new-product-desc').value = '';
-  document.getElementById('new-product-retail').value = '';
-  document.getElementById('new-product-wholesale').value = '';
-  document.getElementById('new-product-stock').value = '';
-  
-  renderBestsellers();
-  updateAdminProductList();
+    if (!cartItemsContainer || !cartTotalSpan || !cartCountSpan) return;
+
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Tu carrito está vacío</p>';
+    } else {
+        cart.forEach(item => {
+            const product = products.find(p => p.id === item.productId);
+            if (product) {
+                const itemPrice = clientType === 'retail' ? product.retailPrice : product.wholesalePrice;
+                const subtotal = itemPrice * item.quantity;
+                total += subtotal;
+
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <p>${product.name} x ${item.quantity} = $${subtotal.toFixed(2)}</p>
+                    <button onclick="removeFromCart(${product.id})" class="btn-secondary">Quitar</button>
+                `;
+                cartItemsContainer.appendChild(div);
+            }
+        });
+    }
+
+    cartTotalSpan.textContent = total.toFixed(2);
+    cartCountSpan.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
-// Editar producto
-function editProduct(id) {
-  const products = getProducts();
-  const product = products.find(p => p.id == id);
-  if (!product) return;
-
-  const newName = prompt('Nombre:', product.name);
-  const newDesc = prompt('Descripción:', product.desc);
-  const newRetail = prompt('Precio Minorista ($):', product.price.minorista);
-  const newWholesale = prompt('Precio Mayorista ($):', product.price.mayorista);
-  const newStock = prompt('Stock:', product.stock);
-
-  if (newName !== null && newDesc !== null && newRetail !== null && newWholesale !== null && newStock !== null) {
-    product.name = newName.trim() || product.name;
-    product.desc = newDesc.trim() || product.desc;
-    product.price.minorista = parseFloat(newRetail) || product.price.minorista;
-    product.price.mayorista = parseFloat(newWholesale) || product.price.mayorista;
-    product.stock = parseInt(newStock) || product.stock;
-
-    saveProducts(products);
-    alert('✅ Producto actualizado');
-    renderBestsellers();
-    updateAdminProductList();
-  }
+// --- Funciones de Interacción ---
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('nav-links');
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+    }
 }
 
-// Eliminar producto
-function deleteProduct(id) {
-  if (!confirm('¿Eliminar este producto?')) return;
-  
-  let products = getProducts();
-  products = products.filter(p => p.id != id);
-  saveProducts(products);
-  alert('✅ Producto eliminado');
-  renderBestsellers();
-  updateAdminProductList();
-}
-
-// Actualiza lista en admin
-function updateAdminProductList() {
-  const adminDiv = document.getElementById('admin-products');
-  const products = getProducts();
-  adminDiv.innerHTML = products.map(p => `
-    <div class="product-item">
-      <strong>${p.name}</strong><br>
-      Stock: ${p.stock} | Minorista: $${p.price.minorista} | Mayorista: $${p.price.mayorista}
-      <button class="edit-btn" onclick="editProduct(${p.id})">Editar</button>
-      <button class="delete-btn" onclick="deleteProduct(${p.id})">Eliminar</button>
-    </div>
-  `).join('');
-}
-
-// Carrito
-function getCart() {
-  try {
-    return JSON.parse(localStorage.getItem('bebidas_cart')) || [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function saveCart(cart) {
-  try {
-    localStorage.setItem('bebidas_cart', JSON.stringify(cart));
-    updateCartUI();
-  } catch (e) {
-    alert('Error al guardar el carrito.');
-  }
+function toggleClientType() {
+    clientType = clientType === 'retail' ? 'wholesale' : 'retail';
+    document.getElementById('client-type').textContent = clientType === 'retail' ? 'Minorista' : 'Mayorista';
+    renderBestsellers(); // Volver a renderizar para actualizar precios
 }
 
 function addToCart(productId) {
-  const products = getProducts();
-  const product = products.find(p => p.id === productId);
-  if (!product || product.stock <= 0) return alert('Producto sin stock');
-  
-  let cart = getCart();
-  const existing = cart.find(item => item.id === productId);
-  if (existing) {
-    existing.quantity++;
-  } else {
-    cart.push({
-      id: productId,
-      name: product.name,
-      price: product.price[clientType],
-      quantity: 1
-    });
-  }
-  saveCart(cart);
-  alert(`✅ ${product.name} agregado al carrito`);
-}
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
 
-function updateCartUI() {
-  const cart = getCart();
-  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  document.getElementById('cart-count').textContent = count;
-  document.getElementById('cart-total').textContent = total.toFixed(2);
-  
-  const itemsDiv = document.getElementById('cart-items');
-  if (count === 0) {
-    itemsDiv.innerHTML = 'Tu carrito está vacío';
-    return;
-  }
-  let html = '';
-  cart.forEach(item => {
-    html += `
-      <div style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid #eee;">
-        <p><strong>${item.name}</strong> x${item.quantity}</p>
-        <p>$${(item.price * item.quantity).toFixed(2)}</p>
-        <button onclick="removeFromCart(${item.id})" style="background:#d9534f;">Eliminar</button>
-      </div>
-    `;
-  });
-  itemsDiv.innerHTML = html;
+    // Lógica futura para verificar stock antes de añadir
+    if (product.stock <= 0) {
+        alert('Producto agotado!');
+        return;
+    }
+
+    const cartItem = cart.find(item => item.productId === productId);
+    if (cartItem) {
+        cartItem.quantity++;
+    } else {
+        cart.push({ productId, quantity: 1 });
+    }
+    // Lógica futura: reducir stock aquí
+    product.stock--; // Reduce el stock al agregar al carrito
+    renderBestsellers(); // Para actualizar el stock mostrado
+    renderCart();
 }
 
 function removeFromCart(productId) {
-  let cart = getCart();
-  cart = cart.filter(item => item.id !== productId);
-  saveCart(cart);
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    const itemIndex = cart.findIndex(item => item.productId === productId);
+    if (itemIndex > -1) {
+        product.stock += cart[itemIndex].quantity; // Devuelve el stock
+        cart.splice(itemIndex, 1);
+    }
+    renderBestsellers(); // Para actualizar el stock mostrado
+    renderCart();
 }
 
-function loadCartFromStorage() {
-  updateCartUI();
-}
-
-function checkout() {
-  const cart = getCart();
-  if (cart.length === 0) {
-    alert('El carrito está vacío');
-    return;
-  }
-  alert('¡Gracias por tu compra! (Simulada)');
-  localStorage.removeItem('bebidas_cart');
-  updateCartUI();
-  closeCart();
-}
-
-// Cliente
-function toggleClientType() {
-  clientType = clientType === 'mayorista' ? 'minorista' : 'mayorista';
-  updateClientTypeUI();
-  renderBestsellers();
-}
-
-function updateClientTypeUI() {
-  document.getElementById('client-type').textContent = clientType.charAt(0).toUpperCase() + clientType.slice(1);
-}
-
-// Carrito UI
 function openCart() {
-  document.getElementById('cart-panel').classList.add('open');
-  document.getElementById('cart-overlay').classList.add('active');
+    document.getElementById('cart-panel').classList.add('open');
+    document.getElementById('cart-overlay').classList.add('active');
 }
 
 function closeCart() {
-  document.getElementById('cart-panel').classList.remove('open');
-  document.getElementById('cart-overlay').classList.remove('active');
+    document.getElementById('cart-panel').classList.remove('open');
+    document.getElementById('cart-overlay').classList.remove('active');
 }
 
-// Admin
+function checkout() {
+    if (cart.length === 0) {
+        alert('Tu carrito está vacío!');
+        return;
+    }
+    const total = document.getElementById('cart-total').textContent;
+    alert(`Gracias por tu compra! Total: $${total}. Tu pedido ha sido procesado.`);
+    cart = []; // Vaciar carrito
+    renderBestsellers(); // Actualizar stock final
+    renderCart(); // Actualizar vista del carrito
+    closeCart();
+}
+
+// --- Panel de Administración ---
 function showAdminPanel() {
-  const pass = prompt('Contraseña de administrador:');
-  if (pass === 'admin123') {
-    updateAdminProductList();
-    document.getElementById('admin-panel').style.display = 'block';
-  } else if (pass !== null) {
-    alert('❌ Contraseña incorrecta');
-  }
+    const password = prompt("Introduce la contraseña de Admin:");
+    if (password === "admin123") { // Contraseña simple para demostración
+        document.getElementById('admin-panel').style.display = 'block';
+        renderAdminProducts();
+    } else if (password !== null) {
+        alert("Contraseña incorrecta.");
+    }
 }
 
 function closeAdmin() {
-  document.getElementById('admin-panel').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'none';
 }
 
-// Menú móvil
-function toggleMobileMenu() {
-  document.getElementById('nav-links').classList.toggle('active');
+function renderAdminProducts() {
+    const adminProductsContainer = document.getElementById('admin-products');
+    if (!adminProductsContainer) return;
+
+    adminProductsContainer.innerHTML = '';
+    products.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'product-item';
+        div.innerHTML = `
+            ${p.name} - Minorista: $${p.retailPrice.toFixed(2)} / Mayorista: $${p.wholesalePrice.toFixed(2)} / Stock: ${p.stock}
+            <button onclick="editProduct(${p.id})" class="edit-btn">Editar</button>
+            <button onclick="deleteProduct(${p.id})" class="delete-btn">Borrar</button>
+        `;
+        adminProductsContainer.appendChild(div);
+    });
+}
+
+function addProduct() {
+    const name = document.getElementById('new-product-name').value;
+    const desc = document.getElementById('new-product-desc').value;
+    const retailPrice = parseFloat(document.getElementById('new-product-retail').value);
+    const wholesalePrice = parseFloat(document.getElementById('new-product-wholesale').value);
+    const stock = parseInt(document.getElementById('new-product-stock').value);
+
+    if (name && desc && !isNaN(retailPrice) && !isNaN(wholesalePrice) && !isNaN(stock)) {
+        const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+        products.push({ id: newId, name, desc, img: 'https://via.placeholder.com/300x200', retailPrice, wholesalePrice, stock }); // Placeholder img
+        alert('Producto agregado!');
+        
+        // Limpiar formulario
+        document.getElementById('new-product-name').value = '';
+        document.getElementById('new-product-desc').value = '';
+        document.getElementById('new-product-retail').value = '';
+        document.getElementById('new-product-wholesale').value = '';
+        document.getElementById('new-product-stock').value = '';
+        
+        renderBestsellers();
+        renderAdminProducts();
+    } else {
+        alert('Por favor, completa todos los campos para agregar un producto.');
+    }
+}
+
+function editProduct(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    const newName = prompt(`Editar nombre de ${product.name}:`, product.name);
+    if (newName === null) return; // Cancelado
+
+    const newDesc = prompt(`Editar descripción de ${newName}:`, product.desc);
+    if (newDesc === null) return;
+
+    const newRetailPrice = parseFloat(prompt(`Editar precio minorista de ${newName}:`, product.retailPrice));
+    if (isNaN(newRetailPrice)) return;
+
+    const newWholesalePrice = parseFloat(prompt(`Editar precio mayorista de ${newName}:`, product.wholesalePrice));
+    if (isNaN(newWholesalePrice)) return;
+
+    const newStock = parseInt(prompt(`Editar stock de ${newName}:`, product.stock));
+    if (isNaN(newStock)) return;
+
+    product.name = newName;
+    product.desc = newDesc;
+    product.retailPrice = newRetailPrice;
+    product.wholesalePrice = newWholesalePrice;
+    product.stock = newStock;
+
+    alert('Producto actualizado!');
+    renderBestsellers();
+    renderAdminProducts();
+}
+
+function deleteProduct(id) {
+    if (confirm("¿Estás seguro de que quieres eliminar este producto?")) {
+        products = products.filter(p => p.id !== id);
+        alert('Producto eliminado!');
+        renderBestsellers();
+        renderAdminProducts();
+    }
 }
 
 
+// --- Inicialización al cargar la página ---
+document.addEventListener('DOMContentLoaded', () => {
+    renderBestsellers();
+    renderCart(); // Asegúrate de que el carrito también se inicialice
+    startCarousel(); // <--- ¡Esta línea es CRÍTICA para el carrusel!
+});
