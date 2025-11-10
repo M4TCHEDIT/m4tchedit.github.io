@@ -1,102 +1,97 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Distribuidora de bebidas al por mayor y al menor. Precios competitivos, promociones exclusivas, entrega rápida.">
-  <meta name="keywords" content="bebidas al por mayor, distribuidora bebidas, cerveza, vino, refrescos, agua mineral, jugo natural">
-  <title>Bebidas Express</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Distribuidora de bebidas al por mayor y al menor. Precios competitivos, promociones exclusivas, entrega rápida.">
+  <meta name="keywords" content="bebidas al por mayor, distribuidora bebidas, cerveza, vino, refrescos, agua mineral, jugo natural">
+  <title>Bebidas Express</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <header>
-  <div class="logo">Bebidas Express</div>
-  <button id="menu-toggle" aria-label="Menú"><i class="fas fa-bars"></i></button>
-  <nav class="nav-links" id="nav-links">
-    <a href="#" onclick="toggleClientType()">Cliente: <span id="client-type">Minorista</span></a>
-    <a href="#" onclick="showAdminPanel()">Admin</a>
-  </nav>
+  <div class="logo">Bebidas Express</div>
+    <button id="menu-toggle" aria-label="Menú" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+  <nav class="nav-links" id="nav-links">
+    <a href="#" onclick="toggleClientType()">Cliente: <span id="client-type">Minorista</span></a>
+    <a href="#" onclick="showAdminPanel()">Admin</a>
+  </nav>
 </header>
 
-<!-- Hero Carrusel -->
 <div class="hero">
-  <div class="hero-slides" id="hero-slides">
-    <div class="hero-slide" style="background: linear-gradient(rgba(255,102,0,0.85), rgba(255,102,0,0.9)), url('https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
-      <div class="hero-content">
-        <h1>🔥 2x1 en Cervezas Hoy</h1>
-        <p>¡Aprovecha antes de que se acabe!</p>
-      </div>
-    </div>
-    <div class="hero-slide" style="background: linear-gradient(rgba(0,51,102,0.85), rgba(0,51,102,0.9)), url('https://images.unsplash.com/photo-1575240092532-7d4f9e4f1d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
-      <div class="hero-content">
-        <h1>🚚 Envío Gratis en Pedidos >$500</h1>
-        <p>Para mayoristas y minoristas</p>
-      </div>
-    </div>
-  </div>
+  <div class="hero-slides" id="hero-slides">
+        <div class="hero-slide" style="background: linear-gradient(rgba(255,102,0,0.85), rgba(255,102,0,0.9)), url('https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-position: center;">
+      <div class="hero-content">
+        <h1>🔥 2x1 en Cervezas Hoy</h1>
+        <p>¡Aprovecha antes de que se acabe!</p>
+      </div>
+    </div>
+        <div class="hero-slide" style="background: linear-gradient(rgba(0,51,102,0.85), rgba(0,51,102,0.9)), url('https://images.unsplash.com/photo-1575240092532-7d4f9e4f1d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-position: center;">
+      <div class="hero-content">
+        <h1>🚚 Envío Gratis en Pedidos >$500</h1>
+        <p>Para mayoristas y minoristas</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="trust-badges">
-  <div class="badge"><i class="fas fa-shield-alt"></i><span>Pago Seguro</span></div>
-  <div class="badge"><i class="fas fa-truck"></i><span>24h Entrega</span></div>
-  <div class="badge"><i class="fas fa-users"></i><span>+500 Clientes</span></div>
+  <div class="badge"><i class="fas fa-shield-alt"></i><span>Pago Seguro</span></div>
+  <div class="badge"><i class="fas fa-truck"></i><span>24h Entrega</span></div>
+  <div class="badge"><i class="fas fa-users"></i><span>+500 Clientes</span></div>
 </div>
 
 <h2 class="section-title">Productos Destacados</h2>
 <div class="bestsellers" id="bestsellers-container"></div>
 
-<!-- Carrito -->
 <div id="cart" onclick="openCart()" aria-label="Carrito">
-  <i class="fas fa-shopping-cart"></i>
-  <span id="cart-count">0</span>
+  <i class="fas fa-shopping-cart"></i>
+  <span id="cart-count">0</span>
 </div>
 
-<!-- WhatsApp -->
-<a href="https://wa.me/1234567890?text=Hola,%20necesito%20ayuda%20con%20mi%20pedido%20de%20bebidas." 
-   class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-  <i class="fab fa-whatsapp"></i>
+<a href="https://wa.me/1234567890?text=Hola,%20necesito%20ayuda%20con%20mi%20pedido%20de%20bebidas." 
+   class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Panel Carrito -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <div class="cart-panel" id="cart-panel">
-  <h3>🛒 Carrito de Compras</h3>
-  <div id="cart-items">Tu carrito está vacío</div>
-  <p><strong>Total: $<span id="cart-total">0.00</span></strong></p>
-  <button onclick="checkout()">Finalizar Compra</button>
-  <button onclick="closeCart()" class="btn-secondary">Cerrar</button>
+  <h3>🛒 Carrito de Compras</h3>
+  <div id="cart-items">Tu carrito está vacío</div>
+  <p><strong>Total: $<span id="cart-total">0.00</span></strong></p>
+  <button onclick="checkout()">Finalizar Compra</button>
+  <button onclick="closeCart()" class="btn-secondary">Cerrar</button>
 </div>
 
-<!-- Panel Admin -->
 <div id="admin-panel">
-  <div class="admin-header">
-    <h2>Panel de Administración</h2>
-    <button onclick="closeAdmin()" class="btn-close">✕</button>
-  </div>
-  <div class="admin-content">
-    <p>🔒 Contraseña: <code>admin123</code></p>
+  <div class="admin-header">
+    <h2>Panel de Administración</h2>
+    <button onclick="closeAdmin()" class="btn-close">✕</button>
+  </div>
+  <div class="admin-content">
+    <p>🔒 Contraseña: <code>admin123</code></p>
 
-    <h3>Agregar Nuevo Producto</h3>
-    <div class="admin-form">
-      <input type="text" id="new-product-name" placeholder="Nombre del producto" required>
-      <input type="text" id="new-product-desc" placeholder="Descripción" required>
-      <input type="number" id="new-product-retail" placeholder="Precio Minorista ($)" required>
-      <input type="number" id="new-product-wholesale" placeholder="Precio Mayorista ($)" required>
-      <input type="number" id="new-product-stock" placeholder="Stock disponible" required>
-      <button onclick="addProduct()">✅ Agregar Producto</button>
-    </div>
+    <h3>Agregar Nuevo Producto</h3>
+    <div class="admin-form">
+      <input type="text" id="new-product-name" placeholder="Nombre del producto" required>
+      <input type="text" id="new-product-desc" placeholder="Descripción" required>
+      <input type="number" id="new-product-retail" placeholder="Precio Minorista ($)" required>
+      <input type="number" id="new-product-wholesale" placeholder="Precio Mayorista ($)" required>
+      <input type="number" id="new-product-stock" placeholder="Stock disponible" required>
+      <button onclick="addProduct()">✅ Agregar Producto</button>
+    </div>
 
-    <h3>Productos Actuales</h3>
-    <div id="admin-products"></div>
-  </div>
+    <h3>Productos Actuales</h3>
+    <div id="admin-products"></div>
+  </div>
 </div>
 
 <footer>
-  <p>© 2025 Bebidas Express. Todos los derechos reservados.</p>
-  <p>ventas@bebidasexpress.com | (123) 456-7890</p>
+  <p>© 2025 Bebidas Express. Todos los derechos reservados.</p>
+  <p>ventas@bebidasexpress.com | (123) 456-7890</p>
 </footer>
 
 <script src="js/app.js"></script>
