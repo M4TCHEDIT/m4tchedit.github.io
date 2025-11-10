@@ -21,7 +21,7 @@
   </nav>
 </header>
 
-<!-- Hero Carrusel Corregido -->
+<!-- Hero Carrusel -->
 <div class="hero">
   <div class="hero-slides" id="hero-slides">
     <div class="hero-slide" style="background: linear-gradient(rgba(255,102,0,0.85), rgba(255,102,0,0.9)), url('https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center;">
@@ -77,8 +77,18 @@
     <button onclick="closeAdmin()" class="btn-close">✕</button>
   </div>
   <div class="admin-content">
-    <p>¡Bienvenido! Aquí puedes gestionar productos y promociones.</p>
     <p>🔒 Contraseña: <code>admin123</code></p>
+
+    <h3>Agregar Nuevo Producto</h3>
+    <div class="admin-form">
+      <input type="text" id="new-product-name" placeholder="Nombre del producto" required>
+      <input type="text" id="new-product-desc" placeholder="Descripción" required>
+      <input type="number" id="new-product-retail" placeholder="Precio Minorista ($)" required>
+      <input type="number" id="new-product-wholesale" placeholder="Precio Mayorista ($)" required>
+      <input type="number" id="new-product-stock" placeholder="Stock disponible" required>
+      <button onclick="addProduct()">✅ Agregar Producto</button>
+    </div>
+
     <h3>Productos Actuales</h3>
     <div id="admin-products"></div>
   </div>
