@@ -8,7 +8,7 @@ function getProducts() {
       id: 1,
       name: 'Cerveza Artesanal',
       desc: 'Cerveza premium de 500ml',
-      img: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+      img: 'https://plus.unsplash.com/premium_photo-1664391981475-42c0449b7727?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=483',
       price: { minorista: 50, mayorista: 40 },
       stock: 100
     },
@@ -16,7 +16,7 @@ function getProducts() {
       id: 2,
       name: 'Vino Tinto',
       desc: 'Vino tinto reserva 750ml',
-      img: 'https://images.unsplash.com/photo-1575240092532-7d4f9e4f1d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+      img: 'https://images.unsplash.com/photo-1582673937754-8d0cfed5dcc9?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=475',
       price: { minorista: 150, mayorista: 120 },
       stock: 50
     },
@@ -24,7 +24,7 @@ function getProducts() {
       id: 3,
       name: 'Agua Mineral',
       desc: 'Agua natural sin gas 1.5L',
-      img: 'https://images.unsplash.com/photo-1600804731381-8a66963f0ba1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80',
+      img: 'https://images.unsplash.com/photo-1652491285696-472cec79a77a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=387',
       price: { minorista: 20, mayorista: 15 },
       stock: 200
     }
@@ -298,3 +298,4 @@ function closeAdmin() {
 function toggleMobileMenu() {
   document.getElementById('nav-links').classList.toggle('active');
 }
+
