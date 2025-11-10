@@ -22,20 +22,19 @@
   </nav>
 </header>
 
+<!-- Hero Carrusel Corregido -->
 <div class="hero">
   <div class="hero-slides" id="hero-slides">
-    <div class="hero-slide">
-      <img src="https://via.placeholder.com/1200x400/FF6600/FFFFFF?text=🔥+2x1+en+Cervezas+Hoy" alt="Oferta: 2x1 en Cervezas">
+    <div class="hero-slide" style="background: linear-gradient(rgba(255,102,0,0.8), rgba(255,102,0,0.9)), url('https://images.unsplash.com/photo-1587132137056-bfbf0166836e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
       <div class="hero-content">
-        <h1>Bebidas Frescas al Mejor Precio</h1>
-        <p>¡Entregas en 24h! Mayoristas y minoristas bienvenidos.</p>
+        <h1>🔥 2x1 en Cervezas Hoy</h1>
+        <p>¡Aprovecha antes de que se acabe!</p>
       </div>
     </div>
-    <div class="hero-slide">
-      <img src="https://via.placeholder.com/1200x400/003366/FFFFFF?text=🚚+Envío+Gratis+en+Pedidos+>$500" alt="Envío gratis">
+    <div class="hero-slide" style="background: linear-gradient(rgba(0,51,102,0.8), rgba(0,51,102,0.9)), url('https://images.unsplash.com/photo-1575240092532-7d4f9e4f1d9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
       <div class="hero-content">
-        <h1>Envío Gratis</h1>
-        <p>En pedidos mayores a $500 + IVA</p>
+        <h1>🚚 Envío Gratis en Pedidos >$500</h1>
+        <p>Para mayoristas y minoristas</p>
       </div>
     </div>
   </div>
@@ -50,16 +49,19 @@
 <h2 class="section-title">Productos Destacados</h2>
 <div class="bestsellers" id="bestsellers-container"></div>
 
+<!-- Carrito -->
 <div id="cart" onclick="openCart()" aria-label="Carrito">
   <i class="fas fa-shopping-cart"></i>
   <span id="cart-count">0</span>
 </div>
 
+<!-- WhatsApp -->
 <a href="https://wa.me/1234567890?text=Hola,%20necesito%20ayuda%20con%20mi%20pedido%20de%20bebidas." 
    class="whatsapp-float" target="_blank" aria-label="WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- Panel Carrito -->
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 <div class="cart-panel" id="cart-panel">
   <h3>🛒 Carrito de Compras</h3>
@@ -69,15 +71,18 @@
   <button onclick="closeCart()" class="btn-secondary">Cerrar</button>
 </div>
 
+<!-- Panel Admin -->
 <div id="admin-panel">
   <div class="admin-header">
     <h2>Panel de Administración</h2>
     <button onclick="closeAdmin()" class="btn-close">✕</button>
   </div>
   <div class="admin-content">
-    <p>¡Bienvenido! Aquí puedes gestionar productos y promociones.</p>
-    <p>🔒 Contraseña aceptada: <code>admin123</code></p>
-    <button onclick="alert('En una versión real, aquí gestionarías productos.')">Gestionar Productos</button>
+    <p>¡Bienvenido! Aquí puedes gestionar productos, promociones y pedidos.</p>
+    <p>🔒 Contraseña utilizada: <code>admin123</code></p>
+    <h3>Productos</h3>
+    <div id="admin-products"></div>
+    <button onclick="alert('En versión real: formulario para agregar productos.')">+ Agregar Producto</button>
   </div>
 </div>
 
