@@ -68,6 +68,7 @@ header {
 
 /* Hero Carrusel */
 .hero {
+  /* Se mantiene la altura relativa y máxima para evitar el estiramiento */
   height: 40vh; 
   max-height: 500px;
   position: relative;
@@ -83,15 +84,15 @@ header {
 }
 
 .hero-slide {
-  /* CORRECCIÓN PRINCIPAL: Cada slide ocupa exactamente el 50% del contenedor flex (que es 200% de .hero) */
-  flex: 0 0 50%; /* Esto hace que cada slide tenga el 100% del ancho visible de .hero */
+  /* CORRECCIÓN FINAL CLAVE: Fuerza a cada slide a tomar el 50% del contenedor 200%, o el 100% de la vista */
+  flex: 0 0 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100%; 
   background-size: cover;
-  background-position: center; /* Asegura que la imagen de fondo esté centrada */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-position: center; /* Asegura el enfoque de la imagen */
+  background-repeat: no-repeat;
 }
 
 .hero-content {
@@ -423,5 +424,4 @@ footer {
   .cart-panel {
     width: 100%;
   }
-
 }
