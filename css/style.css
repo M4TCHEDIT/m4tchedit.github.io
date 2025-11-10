@@ -66,41 +66,48 @@ header {
   background: rgba(255,255,255,0.2);
 }
 
+/* Hero Carrusel */
 .hero {
+  height: 400px;
   position: relative;
-  color: white;
-  text-align: center;
-  padding: 2rem 1rem 4rem;
-  background: #f0f0f0;
   overflow: hidden;
+  margin-bottom: 2rem;
 }
 
 .hero-slides {
   display: flex;
   transition: transform 0.5s ease-in-out;
   width: 200%;
+  height: 100%;
 }
 
 .hero-slide {
   min-width: 100%;
-  padding: 1rem;
-}
-
-.hero-slide img {
-  width: 100%;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
-  background: rgba(0,0,0,0.6);
-  padding: 1.5rem;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+  background: rgba(0,0,0,0.5);
   border-radius: 8px;
   max-width: 600px;
-  margin: 1rem auto 0;
 }
 
+.hero-content h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+}
+
+/* Trust Badges */
 .trust-badges {
   display: flex;
   justify-content: center;
@@ -124,6 +131,7 @@ header {
   color: var(--color-accent);
 }
 
+/* Secciones */
 .section-title {
   text-align: center;
   margin: 2rem 0;
@@ -143,6 +151,7 @@ header {
   padding: 1rem;
   text-align: center;
   background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .product-card img {
@@ -159,6 +168,7 @@ header {
   margin: 0.5rem 0;
 }
 
+/* Botones */
 button {
   background-color: var(--color-accent);
   color: white;
@@ -167,6 +177,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  transition: background 0.2s;
 }
 
 button:hover {
@@ -187,8 +198,15 @@ button:hover {
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Carrito */
 #cart {
   position: fixed;
   top: 20px;
@@ -202,7 +220,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1400;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
@@ -231,7 +249,7 @@ button:hover {
   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
   padding: 1.5rem;
   transition: right 0.3s ease;
-  z-index: 1001;
+  z-index: 1400;
   overflow-y: auto;
 }
 
@@ -246,7 +264,7 @@ button:hover {
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.5);
-  z-index: 1000;
+  z-index: 1399;
   display: none;
 }
 
@@ -254,6 +272,7 @@ button:hover {
   display: block;
 }
 
+/* WhatsApp */
 .whatsapp-float {
   position: fixed;
   width: 60px;
@@ -266,7 +285,7 @@ button:hover {
   text-align: center;
   font-size: 30px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1002;
+  z-index: 1600;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,6 +296,7 @@ button:hover {
   margin-top: 4px;
 }
 
+/* Admin Panel */
 #admin-panel {
   display: none;
   position: fixed;
@@ -284,7 +304,7 @@ button:hover {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.9);
   z-index: 2000;
   color: white;
 }
@@ -299,7 +319,7 @@ button:hover {
 
 .admin-content {
   padding: 2rem;
-  max-width: 600px;
+  max-width: 700px;
   margin: 2rem auto;
   background: white;
   color: var(--color-dark);
@@ -312,6 +332,54 @@ button:hover {
   border-radius: 4px;
 }
 
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 1.5rem 0;
+}
+
+.admin-form input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-form button {
+  padding: 0.7rem;
+  font-weight: bold;
+}
+
+.admin-products .product-item {
+  padding: 0.8rem;
+  border-bottom: 1px solid #eee;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+}
+
+.admin-products .product-item:last-child {
+  border-bottom: none;
+}
+
+.admin-products .edit-btn, .admin-products .delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.admin-products .edit-btn {
+  background: #28a745;
+}
+
+.admin-products .delete-btn {
+  background: #dc3545;
+  margin-left: 5px;
+}
+
+/* Footer */
 footer {
   background-color: var(--color-header);
   color: white;
@@ -320,6 +388,7 @@ footer {
   margin-top: 2rem;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   #menu-toggle {
     display: block;
@@ -335,11 +404,14 @@ footer {
   .nav-links.active {
     display: flex;
   }
-  .hero-slides {
-    width: 200%;
+  .hero {
+    height: 300px;
   }
-  .hero-slide img {
-    max-height: 250px;
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
   }
   .cart-panel {
     width: 100%;
