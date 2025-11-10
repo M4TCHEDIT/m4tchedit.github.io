@@ -68,7 +68,6 @@ header {
 
 /* Hero Carrusel */
 .hero {
-  /* Se mantiene la altura relativa y máxima para evitar el estiramiento */
   height: 40vh; 
   max-height: 500px;
   position: relative;
@@ -84,14 +83,14 @@ header {
 }
 
 .hero-slide {
-  /* CORRECCIÓN FINAL CLAVE: Fuerza a cada slide a tomar el 50% del contenedor 200%, o el 100% de la vista */
+  /* Corrección de ancho para que cada slide ocupe el 100% de la vista */
   flex: 0 0 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100%; 
   background-size: cover;
-  background-position: center; /* Asegura el enfoque de la imagen */
+  background-position: center;
   background-repeat: no-repeat;
 }
 
@@ -315,6 +314,9 @@ button:hover {
   background: rgba(0,0,0,0.9);
   z-index: 2000;
   color: white;
+  /* CORRECCIÓN SCROLL: Permite el scroll vertical en el panel principal */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; 
 }
 
 .admin-header {
