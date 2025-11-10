@@ -10,16 +10,14 @@ let products = [
 let cart = [];
 let clientType = 'retail'; // 'retail' o 'wholesale'
 
-// --- Carrusel Variables y Funciones (Corregido) ---
+// --- Carrusel Variables y Funciones ---
 const heroSlides = document.getElementById('hero-slides');
 let currentSlide = 0;
-// Asegura que totalSlides se calcule solo si heroSlides existe
 const totalSlides = heroSlides ? heroSlides.children.length : 0; 
 let carouselInterval;
 
 function showSlide(index) {
     if (heroSlides) {
-        // La lógica de desplazamiento se mantiene
         heroSlides.style.transform = `translateX(-${index * 100}%)`;
     }
 }
@@ -33,16 +31,15 @@ function startCarousel() {
     if (carouselInterval) {
         clearInterval(carouselInterval);
     }
-    // CORRECCIÓN 1: Eliminamos la llamada a showSlide(currentSlide) aquí.
-    // Solo iniciamos el temporizador. La posición inicial ya se fija en DOMContentLoaded.
-    carouselInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
+    // CORRECCIÓN 1: Solo iniciamos el temporizador. La posición inicial ya se fija abajo.
+    carouselInterval = setInterval(nextSlide, 5000); 
 }
 // --- Fin Carrusel ---
 
 // --- Funciones de Renderizado ---
 function renderBestsellers() {
     const container = document.getElementById('bestsellers-container');
-    if (!container) return; // Salir si el contenedor no existe
+    if (!container) return; 
 
     container.innerHTML = '';
     products.forEach(p => {
@@ -106,14 +103,13 @@ function toggleMobileMenu() {
 function toggleClientType() {
     clientType = clientType === 'retail' ? 'wholesale' : 'retail';
     document.getElementById('client-type').textContent = clientType === 'retail' ? 'Minorista' : 'Mayorista';
-    renderBestsellers(); // Volver a renderizar para actualizar precios
+    renderBestsellers(); 
 }
 
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
-    // Lógica futura para verificar stock antes de añadir
     if (product.stock <= 0) {
         alert('Producto agotado!');
         return;
@@ -125,9 +121,9 @@ function addToCart(productId) {
     } else {
         cart.push({ productId, quantity: 1 });
     }
-    // Lógica futura: reducir stock aquí
-    product.stock--; // Reduce el stock al agregar al carrito
-    renderBestsellers(); // Para actualizar el stock mostrado
+    
+    product.stock--; 
+    renderBestsellers(); 
     renderCart();
 }
 
@@ -137,10 +133,10 @@ function removeFromCart(productId) {
 
     const itemIndex = cart.findIndex(item => item.productId === productId);
     if (itemIndex > -1) {
-        product.stock += cart[itemIndex].quantity; // Devuelve el stock
+        product.stock += cart[itemIndex].quantity; 
         cart.splice(itemIndex, 1);
     }
-    renderBestsellers(); // Para actualizar el stock mostrado
+    renderBestsellers(); 
     renderCart();
 }
 
@@ -161,16 +157,16 @@ function checkout() {
     }
     const total = document.getElementById('cart-total').textContent;
     alert(`Gracias por tu compra! Total: $${total}. Tu pedido ha sido procesado.`);
-    cart = []; // Vaciar carrito
-    renderBestsellers(); // Actualizar stock final
-    renderCart(); // Actualizar vista del carrito
+    cart = []; 
+    renderBestsellers(); 
+    renderCart(); 
     closeCart();
 }
 
 // --- Panel de Administración ---
 function showAdminPanel() {
     const password = prompt("Introduce la contraseña de Admin:");
-    if (password === "admin123") { // Contraseña simple para demostración
+    if (password === "admin123") { 
         document.getElementById('admin-panel').style.display = 'block';
         renderAdminProducts();
     } else if (password !== null) {
@@ -208,7 +204,7 @@ function addProduct() {
 
     if (name && desc && !isNaN(retailPrice) && !isNaN(wholesalePrice) && !isNaN(stock)) {
         const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-        products.push({ id: newId, name, desc, img: 'https://via.placeholder.com/300x200', retailPrice, wholesalePrice, stock }); // Placeholder img
+        products.push({ id: newId, name, desc, img: 'https://via.placeholder.com/300x200', retailPrice, wholesalePrice, stock }); 
         alert('Producto agregado!');
         
         // Limpiar formulario
@@ -230,7 +226,7 @@ function editProduct(id) {
     if (!product) return;
 
     const newName = prompt(`Editar nombre de ${product.name}:`, product.name);
-    if (newName === null) return; // Cancelado
+    if (newName === null) return; 
 
     const newDesc = prompt(`Editar descripción de ${newName}:`, product.desc);
     if (newDesc === null) return;
@@ -268,11 +264,11 @@ function deleteProduct(id) {
 // --- Inicialización al cargar la página ---
 document.addEventListener('DOMContentLoaded', () => {
     renderBestsellers();
-    renderCart(); // Asegúrate de que el carrito también se inicialice
+    renderCart(); 
     
-    // CORRECCIÓN 2: 
-    // Fija la posición inicial en 0 (slide naranja)
+    // CORRECCIÓN CRÍTICA 2:
+    // 1. Fija la posición inicial en 0 (slide naranja) inmediatamente.
     showSlide(0); 
-    // Inicia el carrusel. El primer movimiento ocurrirá solo después de 5 segundos.
+    // 2. Inicia el carrusel. El primer movimiento ocurrirá SÓLO después de 5 segundos.
     startCarousel(); 
 });
